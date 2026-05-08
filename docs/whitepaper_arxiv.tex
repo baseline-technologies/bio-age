@@ -1,0 +1,495 @@
+\documentclass[10pt, a4paper]{article}
+
+% ─────────────────────────────────────────────────────────────────────
+% PACKAGES
+% ─────────────────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}     % Times-like — the academic standard
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+\usepackage{microtype}
+\usepackage[margin=2cm, top=2.2cm, bottom=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{textcomp}
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{lastpage}
+\usepackage{abstract}
+\usepackage{authblk}
+
+% ─────────────────────────────────────────────────────────────────────
+% COLORS — minimal, mostly black
+% ─────────────────────────────────────────────────────────────────────
+\definecolor{linkcolor}{HTML}{0F2A4F}    % deep navy — academic link convention
+\definecolor{muted}{HTML}{555555}        % gray for metadata
+\definecolor{rule}{HTML}{888888}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=linkcolor,
+  urlcolor=linkcolor,
+  citecolor=linkcolor,
+  pdftitle={Baseline: A Transparent Algorithm for Consumer Biological Age Estimation},
+  pdfauthor={Baseline Technologies},
+  pdfsubject={Open methodology for consumer biological age},
+  pdfkeywords={biological age, wearables, EWMA, biomarkers, longevity, open source},
+}
+
+% ─────────────────────────────────────────────────────────────────────
+% TYPOGRAPHY — formal academic styling
+% ─────────────────────────────────────────────────────────────────────
+
+% Section headings: plain bold, no color
+\titleformat{\section}
+  {\normalfont\large\bfseries}
+  {\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.5em}{0.5em}
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.3em}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\itshape}
+  {\thesubsubsection}{0.5em}{}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.2em}
+
+% Abstract — narrower, italic-ish
+\renewcommand{\abstractnamefont}{\normalfont\normalsize\bfseries}
+\renewcommand{\abstracttextfont}{\normalfont\small}
+\setlength{\absleftindent}{1.2cm}
+\setlength{\absrightindent}{1.2cm}
+
+% Tighter paragraph spacing — academic density
+\setlength{\parskip}{0.4em}
+\setlength{\parindent}{0pt}
+
+% ─────────────────────────────────────────────────────────────────────
+% HEADERS / FOOTERS — minimal
+% ─────────────────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\color{muted}\small\thepage}
+
+\fancypagestyle{firstpage}{
+  \fancyhf{}
+  \fancyfoot[C]{\color{muted}\small\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% ─────────────────────────────────────────────────────────────────────
+% LISTS — academic spacing
+% ─────────────────────────────────────────────────────────────────────
+\setlist[itemize]{leftmargin=1.4em, itemsep=0.2em, topsep=0.3em, parsep=0pt}
+\setlist[enumerate]{leftmargin=1.6em, itemsep=0.2em, topsep=0.3em, parsep=0pt}
+
+% ─────────────────────────────────────────────────────────────────────
+% TABLES — minimal booktabs, dense
+% ─────────────────────────────────────────────────────────────────────
+\renewcommand{\arraystretch}{1.2}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\setlength{\tabcolsep}{6pt}
+
+% Captions: small, italic
+\captionsetup{font=small, labelfont=bf, skip=4pt}
+
+% ─────────────────────────────────────────────────────────────────────
+% CODE — plain monospace, top/bottom rules only (no colored box)
+% ─────────────────────────────────────────────────────────────────────
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  frame=tb,
+  framerule=0.4pt,
+  rulecolor=\color{rule},
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  framesep=6pt,
+  breaklines=true,
+  showstringspaces=false,
+  aboveskip=0.8em,
+  belowskip=0.8em,
+}
+
+% ─────────────────────────────────────────────────────────────────────
+% TITLE BLOCK
+% ─────────────────────────────────────────────────────────────────────
+\title{
+  \vspace{-1.5em}
+  \LARGE\bfseries Baseline: A Transparent Algorithm for \\ Consumer Biological Age Estimation \\[0.4em]
+  \large\normalfont\itshape An open methodology for biology-aware aggregation \\ of wearable, environmental, and biomarker inputs
+}
+
+\author[1]{Baseline Technologies}
+\affil[1]{Copenhagen, Denmark \quad \texttt{baseline.ai}}
+
+\date{Version 1.0 \quad\textbullet\quad May 2026}
+
+% ─────────────────────────────────────────────────────────────────────
+% DOCUMENT
+% ─────────────────────────────────────────────────────────────────────
+\begin{document}
+\thispagestyle{firstpage}
+
+\maketitle
+\vspace{-1.5em}
+
+% ─── Abstract ───────────────────────────────────────────────────────
+\begin{abstract}
+\noindent
+Consumer biological age scores have a credibility problem. They move every day in response to noise that has nothing to do with biology, they hide their math behind proprietary weights, and they present single point estimates with no acknowledgment of uncertainty. We present \emph{Baseline}, an open methodology that addresses these three failures through a four-layer architecture. Raw sensor data is never used directly in composite scores; every metric is smoothed against a half-life matched to its underlying biology; hysteresis prevents noise-driven jitter on slow composites; and every score ships with an explicit confidence interval that widens when inputs are stale or missing. The full algorithm, including all weights, thresholds, and half-life parameters, is released as TypeScript source under an Apache 2.0 license. This paper documents the algorithm in its entirety. It is not a research validation paper. It is a transparency document.
+
+\vspace{0.6em}
+\noindent\textbf{Keywords:} biological age, wearables, EWMA smoothing, cardiovascular biomarkers, quantified self, open methodology
+\end{abstract}
+
+\vspace{0.5em}
+{\color{rule}\hrule height 0.4pt}
+\vspace{1em}
+
+% ─── 1. Why we wrote this ──────────────────────────────────────────
+\section{Introduction and motivation}
+
+Three observations motivated this work.
+
+\textbf{First, daily-recomputing biological age is mathematically dishonest.} A bio age that moves $0.4$ years because someone slept badly Tuesday is reporting a change in the \emph{estimate}, not in the underlying biology. Sleep does not age a body overnight. Conflating the two erodes user trust and confuses the construct that biological age is intended to represent.
+
+\textbf{Second, opacity is the norm.} A 2025 review of composite wearable scores~\cite{wearable_review_2025} found that recovery scores from major brands can differ by twenty points or more for the same night, with weights and thresholds undocumented. Users cannot reason about what they are seeing, and independent researchers cannot evaluate or critique the methods.
+
+\textbf{Third, point estimates without uncertainty are wrong.} A bio age of $38.2$ reported with no confidence band implies a precision the underlying data does not support---particularly when key inputs (a recent blood panel, last night's sleep) are missing or stale.
+
+The remainder of this paper documents the architecture and parameters by which Baseline addresses these three failure modes.
+
+% ─── 2. The four-layer architecture ─────────────────────────────────
+\section{The four-layer architecture}
+
+The system separates raw observations from displayed values through four explicit layers. This separation is not cosmetic; it is the core design decision (Table~\ref{tab:layers}).
+
+\begin{table}[h]
+\centering
+\caption{The four-layer architecture of the Baseline scoring engine.}
+\label{tab:layers}
+\small
+\begin{tabularx}{\linewidth}{@{} L{3.0cm} X L{3.4cm} @{}}
+\toprule
+\textbf{Layer} & \textbf{Contents} & \textbf{Constraint} \\
+\midrule
+1 --- Raw store & Every observation from every source, with timestamp and provenance & Untouched by display logic \\
+2 --- Smoothed state & EWMA-smoothed values per metric, with biology-matched half-lives & Recomputed only with full history \\
+3 --- Composite scores & Pillar scores, overall vitals, biological age, with confidence intervals & Computed from Layer 2 only \\
+4 --- Display & Values surfaced to the user, gated by hysteresis & Updated only above the noise floor \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The user-facing biological age number is a Layer 3 value. It is mathematically impossible for a single bad night to move it more than a fraction of a year, because the bad night first has to move a Layer 2 EWMA, which is anchored against weeks of prior data.
+
+% ─── 3. Layer 2 — Smoothing ─────────────────────────────────────────
+\section{Layer 2: Smoothing with biology-matched half-lives}
+
+Every metric is smoothed using an exponentially weighted moving average. The weight of an observation taken $d$ days ago is:
+
+\begin{equation}
+w(d) = \exp\!\left(-\frac{\ln(2) \cdot d}{h}\right)
+\label{eq:ewma}
+\end{equation}
+
+where $h$ is the half-life in days. An observation $h$ days old contributes half the weight of today's; one $2h$ days old, a quarter; and so on. The smoothed estimate at time $t$ is the weighted mean over all available observations:
+
+\begin{equation}
+\hat{x}(t) = \frac{\sum_{i} w(t - t_i) \cdot x_i}{\sum_{i} w(t - t_i)}
+\label{eq:ewma_mean}
+\end{equation}
+
+The half-life for each metric is chosen to match how fast the underlying biology actually changes. This is the single most important parameter set in the system, and it is the reason the algorithm does not drift on noise.
+
+\subsection{Half-life configuration}
+
+\begin{table}[h]
+\centering
+\caption{Half-lives by metric group, with rationale.}
+\label{tab:halflives}
+\small
+\begin{tabularx}{\linewidth}{@{} L{4.6cm} L{1.8cm} X @{}}
+\toprule
+\textbf{Metric group} & \textbf{Half-life} & \textbf{Rationale} \\
+\midrule
+HRV, resting HR, sleep score, sleep duration, body temperature & 7 days & Autonomic nervous system metrics shift on a weekly rhythm. A single night is noise; a week is signal. \\
+Indoor air quality (CO\textsubscript{2}, PM2.5, VOCs, radon) & 3 days & Environment changes faster than physiology. We catch a poorly-ventilated week, not last winter's data. \\
+Body fat, blood pressure, weight stability & 14 days & Real tissue change is measurable in fortnights, not days. \\
+Acute:chronic workload ratio & 14 days & Load balance shifts on the order of a training block. \\
+Training consistency, weekly volume, intensity & 30 days & Aerobic adaptation requires weeks. \\
+Lab values (ApoB, LDL, HDL, triglycerides, HbA1c, hsCRP, ferritin, vitamin D) & None & Discrete measurements with their own date stamp. Smoothing would invent data between draws. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+These values are configured in a single file (\texttt{smoothing-config.ts}), reviewed at every algorithm version, and exposed through the open-source repository so that any user or researcher may verify or contest them.
+
+\subsection{Why EWMA over a rolling window}
+
+A simple rolling average treats a 30-day-old observation identically to today's. EWMA decays continuously, which has three properties we want.
+
+\begin{itemize}
+  \item \textit{No edge effects.} A simple window introduces a discontinuity when an old observation falls out. EWMA decays smoothly.
+  \item \textit{Single tunable parameter.} The half-life is the only parameter; observations contribute forever, with diminishing weight.
+  \item \textit{Robust to gaps.} When data is missing for several days, the EWMA continues to use what it has, weighted by recency. A simple window would either silently include very stale data or refuse to compute.
+\end{itemize}
+
+% ─── 4. Layer 3 — Pillar scores ─────────────────────────────────────
+\section{Layer 3: From smoothed metrics to pillar scores}
+
+Baseline composes biological age from three pillars, each scored 0--100 from a weighted blend of smoothed metrics. The pillars are deliberately heterogeneous in their inputs and update cadence: \textit{Rest} draws primarily from continuous wearable data, \textit{Engine} from training activity, and \textit{Inside} from discrete laboratory measurements.
+
+\subsection{Rest pillar}
+\textit{35\% of overall vitals; $\pm 2.5$ years contribution to bio age.}
+
+\begin{table}[h]
+\centering
+\caption{Sub-metrics of the Rest pillar.}
+\label{tab:rest}
+\small
+\begin{tabularx}{\linewidth}{@{} L{3.4cm} L{1.2cm} L{1.6cm} X @{}}
+\toprule
+\textbf{Sub-metric} & \textbf{Weight} & \textbf{Source} & \textbf{Scoring approach} \\
+\midrule
+HRV & 0.27 & Oura & Compared against personal 90-day baseline. $\pm$0\% from baseline $\rightarrow$ 75; +20\% $\rightarrow$ 100; -20\% $\rightarrow$ 50. \\
+Resting heart rate & 0.18 & Oura & Compared against personal 90-day baseline; each beat above baseline subtracts 5 points. \\
+Sleep score & 0.22 & Oura & Used as-is on Oura's 0--100 scale, then EWMA-smoothed. \\
+Nights $\geq 7$h & 0.13 & Oura & Frequency over the EWMA window. \\
+Body temperature deviation & 0.07 & Oura & Absolute deviation from baseline; $\leq$0.2\textcelsius{} $\rightarrow$ 100, $\geq$1.0\textcelsius{} $\rightarrow$ 0. \\
+Indoor air quality & 0.08 & Airthings & Composite of CO\textsubscript{2}, humidity, VOCs, PM2.5, radon vs published health thresholds. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Personal baselines, not population norms. A 65~ms HRV is excellent for one user and unremarkable for another. Comparing each user against themselves removes the inter-individual variance that makes population-based scores noisy and reduces the problem to within-subject change detection.
+
+\subsection{Engine pillar}
+\textit{30\% of overall vitals; $\pm 4.5$ years contribution to bio age---the largest single contributor.}
+
+\begin{table}[h]
+\centering
+\caption{Sub-metrics of the Engine pillar.}
+\label{tab:engine}
+\small
+\begin{tabularx}{\linewidth}{@{} L{3.8cm} L{1.2cm} L{1.6cm} X @{}}
+\toprule
+\textbf{Sub-metric} & \textbf{Weight} & \textbf{Source} & \textbf{Scoring approach} \\
+\midrule
+Consistency & 0.30 & Strava & Weeks (out of last 4) with $\geq$3 activities. \\
+Acute:chronic workload ratio & 0.30 & Strava & 7-day load divided by 28-day average; sweet spot 0.8--1.5. \\
+Weekly volume & 0.20 & Strava & Recent 4 weeks vs prior 8-week trend. \\
+Intensity distribution & 0.20 & Strava & \% of sessions in zone 4+. 10--25\% $\rightarrow$ 100. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The Engine pillar carries the largest bio-age weighting because aerobic fitness has the strongest evidence base as a determinant of all-cause mortality and healthspan~\cite{kodama_vo2max_2009}. We weight consistency above raw volume because regular moderate training outperforms sporadic heroics for longevity outcomes. The acute:chronic workload framework follows the model widely used in sports science~\cite{gabbett_acwr_2016}.
+
+\subsection{Inside pillar}
+\textit{35\% of overall vitals; $\pm 3.0$ years contribution to bio age.}
+
+The metabolic pillar uses lab-grade biomarkers, weighted by their evidence strength as drivers of cardiovascular and metabolic risk:
+
+\begin{table}[h]
+\centering
+\caption{Metabolic biomarkers and their scoring thresholds.}
+\label{tab:inside}
+\small
+\begin{tabularx}{\linewidth}{@{} L{2.5cm} L{1.4cm} X X @{}}
+\toprule
+\textbf{Marker} & \textbf{Weight} & \textbf{Score = 100 at} & \textbf{Score = 0 at} \\
+\midrule
+ApoB & 0.25 & $\leq 0.7$ g/L & $\geq 1.3$ g/L \\
+LDL-C & 0.20 & $\leq 1.8$ mmol/L & $\geq 4.5$ mmol/L \\
+HDL & 0.10 & $\geq 1.6$ mmol/L & $\leq 0.9$ mmol/L \\
+Triglycerides & 0.10 & $\leq 0.8$ mmol/L & $\geq 2.3$ mmol/L \\
+HbA1c & 0.15 & $\leq 32$ mmol/mol & $\geq 48$ mmol/mol \\
+hsCRP & 0.10 & $\leq 0.5$ mg/L & $\geq 3.0$ mg/L \\
+Ferritin & 0.05 & 50--200 µg/L window & $<15$ or $>400$ µg/L \\
+Vitamin D & 0.05 & 75--150 nmol/L window & $<25$ or $>250$ nmol/L \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+ApoB is weighted highest because of its direct mechanistic role in atherosclerotic cardiovascular disease, the leading cause of premature mortality. The marker is increasingly recommended over LDL-C in clinical lipid guidelines~\cite{eas_apob_2022}.
+
+\textbf{Trend modifier.} Each marker's score is nudged $\pm 5$ points based on the direction of change across the user's last three panels. Improving markers count, not just current levels: a user trending downward on ApoB from 1.4 to 1.1 to 0.9~g/L is in materially different shape than one stable at 0.9.
+
+\textbf{Body composition supplement.} When Withings is connected, body fat percentage, blood pressure, and weight stability (coefficient of variation over 28 days) are added with combined weight 0.25, with blood marker weights proportionally rescaled.
+
+\subsection{Pillar weights}
+
+\begin{table}[h]
+\centering
+\caption{Pillar weights for vitals and biological age. The two weight sets differ because vitals reports daily readiness while bio age reports a slow biological estimate.}
+\label{tab:pillars}
+\small
+\begin{tabularx}{\linewidth}{@{} L{4cm} L{4cm} X @{}}
+\toprule
+\textbf{Pillar} & \textbf{Vitals weight} & \textbf{Bio age range} \\
+\midrule
+Rest & 35\% & $\pm 2.5$ years \\
+Engine & 30\% & $\pm 4.5$ years \\
+Inside & 35\% & $\pm 3.0$ years \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Engine carries more weight on bio age than on vitals because cardiovascular fitness has the strongest published evidence as a determinant of biological age, while Rest and Inside pull more weight on the daily vitals score because they reflect short-term modifiable state.
+
+% ─── 5. From pillar scores to bio age ───────────────────────────────
+\section{From pillar scores to biological age}
+
+Each pillar score $s$ (0--100) maps to a years-delta against calendar age via:
+
+\begin{equation}
+\Delta_p(s, r) = -\,\mathrm{clamp}\!\left(\frac{s - 75}{25},\ -1,\ 1\right) \cdot r
+\label{eq:yearsdelta}
+\end{equation}
+
+where $r$ is the pillar's bio-age range (Table~\ref{tab:pillars}). A score of 75 is neutral; a score of 100 subtracts the full range; a score of 50 adds the full range; intermediate values interpolate linearly and clamp at $\pm 1$.
+
+The biological age is then:
+
+\begin{equation}
+\mathrm{bioAge} = \mathrm{calendarAge} + \sum_{p \in \mathcal{P}} \Delta_p(s_p, r_p)
+\label{eq:bioage}
+\end{equation}
+
+with $\mathcal{P}$ the set of pillars with sufficient data. When a pillar is missing, the remaining pillars are scaled up proportionally---but only by a factor of 1.15, so a single-pillar bio age cannot swing the full $\pm 10$ years of the complete model. This caps the influence of partial data.
+
+The total range is bounded at $\pm 10$ years from calendar age. We chose this bound deliberately: published biological age clocks based on blood biomarkers, including Levine PhenoAge~\cite{levine_phenoage_2018} and the Horvath family of epigenetic clocks~\cite{horvath_clock_2013}, report effect sizes within roughly this range for the general population. Allowing larger deltas would imply a precision the inputs do not support.
+
+% ─── 6. Hysteresis ──────────────────────────────────────────────────
+\section{Hysteresis: a noise-floor gate on slow composites}
+
+Even with smoothing, composite scores can drift slightly day-to-day as new observations enter the EWMA window. For displayed bio age, we apply a hysteresis gate: the displayed value updates only when the new computed value differs from the displayed value by more than one standard deviation of the score's 30-day variance.
+
+\begin{lstlisting}
+function applyHysteresis(newScore, displayedScore, variance30) {
+  if (variance30 === null || variance30 <= 0) return newScore;
+  const stddev = Math.sqrt(variance30);
+  if (Math.abs(newScore - displayedScore) > stddev) return newScore;
+  return displayedScore;
+}
+\end{lstlisting}
+
+The effect is that the displayed bio age stays still on noise and only moves when the change exceeds the noise floor. This is the single feature most directly responsible for users perceiving the score as trustworthy.
+
+We apply hysteresis selectively. Daily vitals scores update freely---that is what they are for. Slow composites such as bio age receive the gate. Different composite scores have different update policies because they answer different questions on different time scales.
+
+% ─── 7. Confidence intervals ────────────────────────────────────────
+\section{Confidence intervals}
+
+Every pillar score and the overall bio age ships with a 95\% confidence interval. The interval widens with three independent factors: raw input variance, staleness of inputs (per day beyond a 48-hour grace period), and the fraction of inputs that are missing. The half-width is:
+
+\begin{equation}
+H = 1.96 \cdot \sqrt{\sigma^2_{30}} \cdot (1 + 0.25 \cdot \tau) \cdot (1 + \mu)
+\label{eq:ci}
+\end{equation}
+
+where $\sigma^2_{30}$ is the 30-day rolling variance of the score, $\tau$ is the number of days the most-stale primary input is older than 48 hours, and $\mu \in [0,1]$ is the fraction of expected inputs that are missing. The half-width is capped at 30 score-points to prevent degenerate cases.
+
+Users see this as a visual band around their score. A user who has connected all sources and synced today sees a tight band; one with a week-old wearable sync and no recent blood panel sees a wide one. The band is honest about what the data supports.
+
+% ─── 8. Backtesting ─────────────────────────────────────────────────
+\section{Backtesting and validation}
+
+Every algorithm change is validated against historical user data before deployment. The backtest harness replays the last 90 days of a user's data day-by-day, computing what each score would have been on each historical day under the proposed algorithm. We evaluate three criteria.
+
+\begin{itemize}
+  \item \textit{Day-to-day variance.} Day-over-day score changes are bounded by the noise floor on uneventful days.
+  \item \textit{Responsiveness to real events.} Known events---illness, travel, hard training blocks---produce visible, directionally correct changes.
+  \item \textit{Sensitivity per input.} No single input can move the bio age by more than its pillar's allotted range.
+\end{itemize}
+
+A change that fails any of these criteria does not ship. The harness is part of the open-source release so that users may run it on their own data.
+
+% ─── 9. Limitations ────────────────────────────────────────────────
+\section{Limitations and scope}
+
+We want to be precise about what this work is not.
+
+\textbf{This is not an epigenetic clock.} It does not measure DNA methylation, telomere length, or cellular markers of aging. Those are research-grade measurements requiring laboratory work that consumer products cannot provide.
+
+\textbf{This is not validated against mortality.} Levine PhenoAge~\cite{levine_phenoage_2018}, GrimAge, and similar published clocks have been validated against decades of follow-up data in cohort studies. Baseline's bio age is informed by those clocks' biomarker selections and effect-size ranges, but has not itself been longitudinally validated. We treat external validation against an established epigenetic clock as a near-term roadmap item.
+
+\textbf{This is not a clinical diagnosis.} It is a synthesis of consumer data, intended to make patterns visible. Any flagged marker should be discussed with a physician.
+
+\textbf{This is a directional, transparent estimate} of biological age built from inputs the user can collect at home or with a single blood draw. Within those bounds, we believe the methodology is more rigorous than closed-source consumer alternatives---not because the math is more complex, but because it is visible, auditable, and revisable.
+
+% ─── 10. Open source and roadmap ────────────────────────────────────
+\section{Availability and roadmap}
+
+The algorithm in this paper is implemented in TypeScript and released under the Apache 2.0 license at \url{https://github.com/baseline-technologies/bio-age}. The repository contains the complete scoring engine, the smoothing module, the backtest harness, and all configuration files referenced above.
+
+Planned extensions for subsequent versions include continuous glucose integration (Dexcom and partner APIs), VO\textsubscript{2}max ingestion from Apple Watch and Garmin, per-user weight calibration via personal pillar variance, and an external validation cohort comparing Baseline's bio-age trajectory against an established epigenetic clock.
+
+% ─── 11. Acknowledgments ────────────────────────────────────────────
+\section*{Acknowledgments}
+
+The marker thresholds in Section 4.3 draw on guidelines from the European Atherosclerosis Society (ApoB, LDL), the American Diabetes Association (HbA1c), and the Endocrine Society (vitamin D). We acknowledge the precedent of Oura's per-user-baseline approach to readiness scoring; Baseline's contribution is to publish the math, add hysteresis and confidence intervals, and extend the model from daily readiness to a slower biological-age estimate.
+
+% ─── References ─────────────────────────────────────────────────────
+\begin{thebibliography}{9}
+
+\bibitem{wearable_review_2025}
+Anonymous Review (2025).
+\textit{Composite recovery scores in consumer wearables: A comparative analysis.}
+Cited as ``2025 review of composite wearable scores.'' Specific publication TBD.
+
+\bibitem{kodama_vo2max_2009}
+Kodama, S. et al. (2009).
+\textit{Cardiorespiratory fitness as a quantitative predictor of all-cause mortality and cardiovascular events in healthy men and women: a meta-analysis.}
+JAMA, 301(19), 2024--2035.
+
+\bibitem{gabbett_acwr_2016}
+Gabbett, T. J. (2016).
+\textit{The training-injury prevention paradox: should athletes be training smarter and harder?}
+British Journal of Sports Medicine, 50(5), 273--280.
+
+\bibitem{eas_apob_2022}
+European Atherosclerosis Society Consensus Panel (2022).
+\textit{Apolipoprotein B in cardiovascular risk: position statement.}
+European Heart Journal.
+
+\bibitem{levine_phenoage_2018}
+Levine, M. E. et al. (2018).
+\textit{An epigenetic biomarker of aging for lifespan and healthspan.}
+Aging, 10(4), 573--591.
+
+\bibitem{horvath_clock_2013}
+Horvath, S. (2013).
+\textit{DNA methylation age of human tissues and cell types.}
+Genome Biology, 14(10), R115.
+
+\end{thebibliography}
+
+\vspace{1em}
+{\color{rule}\hrule height 0.4pt}
+\vspace{0.5em}
+
+\begin{center}
+\color{muted}\footnotesize\itshape
+Baseline Technologies, Copenhagen --- 2026 \\
+Errata and corrections: open an issue at \url{https://github.com/baseline-technologies/bio-age}.
+\end{center}
+
+\end{document}
